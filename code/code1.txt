@@ -1,0 +1,207 @@
+spectrum analyser :
+
+    sudo apt update :  Running sudo apt update is a command used in Debian-based Linux distributions (such as Ubuntu) to update the local package index. This is the first step to ensuring that your
+	package list is up-to-date before installing or upgrading software.
+	
+    git init  : The git init command initializes a new Git repository in the current directory. This sets up the directory to start tracking changes with Git, which is a version control system.
+	
+	git clone https://aur.archlinux.org/qspectrumanalyzer.git : The git clone command copies a remote Git repository to your local system. In this case, you're cloning the qspectrumanalyzer repository from the Arch User Repository (AUR).
+	
+	cd qspectrumanalyzer : The cd qspectrumanalyzer command is used to change the current directory to the qspectrumanalyzer folder that was created when you cloned the repository
+	
+	dependencies : From PKGBLD
+	
+	depends=('python-qt.py' 'python-pyqt5' 'python-pyqtgraph' 'soapy_power>=1.5.0' 'python-setuptools')
+    optdepends=('rtl_power_fftw: Alternative RTL-SDR backend using FFTW library. Much faster than rtl_power.'
+            'rtl-sdr: original rtl_power backend. Slightly broken, use rtl-sdr-keenerd-git instead.'
+            'rx_tools: rx_power backend. Universal SoapySDR based backend, but seems slow and buggy.'
+            'hackrf: hackrf_sweep backend. Wideband spectrum monitoring with sweep rate of 8 GHz/s.')
+	
+	
+	sudo apt install python3-pip : Running sudo apt install python3-pip installs pip, the package installer for Python, for Python 3. This allows you to easily install Python packages from the Python Package Index (PyPI) 
+    and manage dependencies.
+	
+	pip3 --version :  After installation, you can confirm that pip was installed successfully by checking its version
+	
+	sudo apt install python3.12-venv :you’ll need to install the python3-venv package, which provides the necessary components for creating Python virtual environments on Debian/Ubuntu systems.
+	
+    python3 -m venv myenv : Create the Virtual Environment Again,Once python3-venv is installed, recreate the virtual environment
+
+	source myenv/bin/activate : Activate the Virtual Environment.
+	
+	pip install PyQt5 : Install PyQt5 in the Virtual Environment: With the environment active, install PyQt5
+	
+    sudo apt update : Update Package Index
+	
+	sudo apt install build-essential : Install Development Tools (similar to base-devel on Arch)
+	
+	sudo apt install makepkg : The makepkg command is specific to Arch Linux and its derivatives, and it’s not available in Debian-based distributions (such as Ubuntu). Instead, in Debian-based systems, package building is usually done with tools like dpkg-buildpackage 
+	                           or by directly compiling software from source using make.
+							   
+	sudo apt install docker.io : You can use Docker to create a lightweight Arch Linux container that allows you to run pacman.
+
+    docker pull archlinux : Pull the Arch Linux image
+	
+	sudo docker run -it archlinux /bin/bash : run a arch conatiner .
+	
+	pacman -Syu  : Update the package database inside the container.
+	
+	sudo apt install build-essential : The command sudo apt install build-essential installs the build-essential package, which includes a set of development tools and libraries commonly used for compiling software on Debian-based systems like Ubuntu. This package is essential if you're planning to build software from source, as it provides the compilers and utilities required.
+
+                  What will build-essential install? It installs the following core development tools:
+				  gcc: GNU Compiler Collection (C, C++, etc.)
+				  g++: GNU C++ compiler
+				  make: A build automation tool
+				  libc6-dev: Development libraries for the C standard library
+				  dpkg-dev: Tools for building Debian packages
+				  
+				  
+	Install all the dependencies : 
+	
+	sudo apt install python3-pip python3-pyqt5 python3-numpy python3-scipy soapysdr python3-soapysdr : the command you provided installs several packages related to Python 3, 
+	              PyQt5 (a GUI framework), numerical computing libraries like numpy and scipy, and the soapysdr library for interacting with
+	              Software Defined Radios (SDRs).
+				  
+	            python3-pip:   Installs the Python 3 package manager (pip), which is used to install Python packages from the Python Package Index (PyPI).
+                python3-pyqt5: Installs the PyQt5 library for creating graphical user interfaces (GUIs) in Python.
+                python3-numpy: Installs numpy, a package for scientific computing, which provides support for large, multi-dimensional arrays and matrices, along with a collection of mathematical functions to operate on these arrays.
+                python3-scipy: Installs scipy, a scientific computing library for Python that builds on numpy and provides additional functionality for optimization, integration, interpolation, eigenvalue problems, and more.
+                soapysdr:      Installs the SoapySDR library, which is used for interacting with Software Defined Radios (SDRs).
+                python3-soapysdr: Installs the Python bindings for SoapySDR, enabling you to use SoapySDR functionality directly from Python.
+				
+	            If soapysdr is not available through apt:
+                If you encounter errors like "Unable to locate package soapysdr", it's possible that SoapySDR is not available via the default Ubuntu repositories.
+                 To install SoapySDR, you can:
+                 Add the MyriadRF PPA repository for SoapySDR:
+
+             sudo add-apt-repository ppa:myriadrf/drivers
+             sudo apt update
+             sudo apt install soapysdr0.7
+			 
+			 
+             git clone https://github.com/pothosware/SoapySDR.git:  The sequence of commands you've mentioned is the correct way to clone the SoapySDR repository from GitHub and build it from source.
+			                                                        Here's a step-by-step breakdown of what each command does and how to use them
+             
+			 cd SoapySDR
+             
+			 mkdir build
+             
+			 cd build
+             
+			 cmake ..
+			 
+		 
+    sudo make install : Install SoapySDR Modules for Various SDR Devices:
+                        SoapySDR can interface with various SDR hardware through modules. The following commands install SoapySDR modules for specific SDR devices:
+
+    sudo apt-get install soapysdr-module-rtlsdr : Install RTL-SDR Module:
+                                                  The RTL-SDR module allows SoapySDR to interact with RTL-SDR devices (such as the RTL2832U-based USB dongles).
+												  
+    sudo apt-get install soapysdr-module-airspy : The Airspy module is used to interface with Airspy SDR devices.
+	
+    sudo apt-get install soapysdr-module-hackrf : This module enables SoapySDR to interact with HackRF devices, such as HackRF One. 
+	
+    sudo apt-get install soapysdr-module-lms7   : The LMS7 module supports devices like the LimeSDR (and its variants) through SoapySDR.
+				  
+				  
+	 SoapySDRUtil --find               : The command SoapySDRUtil --find is part of the SoapySDR library, a vendor and platform-neutral SDR (Software-Defined Radio) support library. 
+	                                     This command is used to search for and list available SDR devices connected to your system.
+
+    pip3 install --user qspectrumanalyzer : installs the QSpectrumAnalyzer package, a lightweight, Qt-based spectrum analyzer software for SDR (Software Defined Radio) devices.
+
+
+    sudo apt-get install python3-venv  : installs the python3-venv package on your system, which provides the venv module to create isolated Python environments. 
+										  This is useful for managing dependencies and avoiding conflicts between different projects
+
+	
+	
+    python3 -m venv qspectrumanalyzer-env : it's like setting up a new tool in your personal toolbox instead of putting it in a shared workshop. This command installs the QSpectrumAnalyzer, a software spectrum analyzer for SDR (Software-Defined Radio) devices, just for your user account.
+	                                         It avoids affecting other users or requiring administrative privileges.
+ 
+    source qspectrumanalyzer-env/bin/activate :  is used to activate a Python virtual environment called qspectrumanalyzer-env. By doing this, you switch to a clean, isolated environment where Python and its packages are specific to that environment, 
+											 avoiding interference with global installations.
+											 
+    pip install qspectrumanalyzer   :     installs the QSpectrumAnalyzer software globally or within the active Python environment. QSpectrumAnalyzer is a lightweight spectrum analyzer software for SDR (Software Defined Radio) devices, 
+	                                       which visualizes RF spectra using Python and SoapySDR.
+										   
+	qspectrumanalyzer               :	in your terminal after installing it. This should launch the GUI interface of the software.								   
+	
+    sudo apt-get install --reinstall libqt5gui5 qt5-qmake qtbase5-dev-tools qtbase5-dev libxcb-xinerama0 : reinstalls key components of the Qt5 framework, which is crucial for developing or running applications with graphical user interfaces built using Qt5. 
+
+                                         libqt5gui5: Provides the core Qt5 GUI module needed by Qt-based graphical applications.
+                                                     Handles windowing, widgets, and rendering.
+
+                                         qt5-qmake: Qt5's build system tool used to configure, compile, and build Qt projects.
+                                         qtbase5-dev-tools : Development tools like Qt Designer and other utilities for creating and debugging Qt5 applications.
+                                         qtbase5-dev: Essential headers and libraries for Qt5 application development. 
+                                         libxcb-xinerama0: A library used for multi-monitor setups to handle Xinerama extensions in X11.
+
+                                         export QT_QPA_PLATFORM=xcb :sets the QT_QPA_PLATFORM environment variable to xcb.
+                            										  This environment variable tells Qt applications which platform plugin to use for rendering the GUI. 
+
+                                         sudo apt-get install xvfb :installs Xvfb (X Virtual Framebuffer), a display server that performs graphical operations in memory without requiring a physical display or graphics hardware.
+
+                                          Xvfb :99 & : starts the X Virtual Framebuffer (Xvfb) server on display number :99 in the background. This creates a virtual X server that can run graphical applications without a physical display.
+                                          export DISPLAY=:99 : sets the DISPLAY environment variable to :99, instructing graphical applications to use the X server running on display number :99. This is typically used with Xvfb or other X server instances.
+
+                                        sudo apt-get install --reinstall x11-xkb-utils  : reinstalls the x11-xkb-utils package, which provides essential utilities for managing X11 keyboard layouts and settings.
+										
+										setxkbmap -layout us : sets the keyboard layout to US English.
+
+                                                          What Happens:
+                                                                setxkbmap: This utility configures the keyboard layout in the X11 system.
+                                                                -layout us: Specifies the layout as US English, so the keyboard will match the standard QWERTY layout used in the United States
+										
+
+   
+   55  ssh -X user@3.112.16.157
+   56  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   57  ssh-copy-id user@3.112.16.157
+   58  chmod 700 ~/.ssh
+   59  chmod 600 ~/.ssh/authorized_keys
+   60  chmod 700 ~/.ssh
+   61  chmod 600 ~/.ssh/authorized_keys
+   62  chown -R user:user ~/.ssh
+   63  whoami
+   64  chown -R ubuntu:ubuntu ~/.ssh
+   65  chown -R your_username:your_username ~/.ssh
+   66  whoami
+   67  chown -R ubuntu:ubuntu ~/.ssh
+   68  ssh -i ~/.ssh/your_private_key user@3.112.16.157
+   69  PubkeyAuthentication yes
+   70  AuthorizedKeysFile .ssh/authorized_keys
+   71  sudo systemctl restart sshd
+   72  ssh -v user@3.112.16.157
+   73  ls ~/.ssh
+   74  ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
+   75  ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
+   76  ssh-copy-id -i ~/.ssh/id_rsa.pub user@3.112.16.157
+   77  cat ~/.ssh/id_rsa.pub
+   78  mkdir -p ~/.ssh
+   79  echo "your-public-key-here" >> ~/.ssh/authorized_keys
+   80  chmod 700 ~/.ssh
+   81  chmod 600 ~/.ssh/authorized_keys
+   82  ssh -v user@3.112.16.157
+   83  chmod 700 ~/.ssh
+   84  chmod 600 ~/.ssh/authorized_keys
+   85  cat ~/.ssh/authorized_keys
+   86  ssh -i ~/.ssh/id_rsa user@3.112.16.157
+   87  chmod 700 ~/.ssh
+   88  chmod 600 ~/.ssh/id_rsa
+   89  chmod 644 ~/.ssh/id_rsa.pub
+   90  PubkeyAuthentication yes
+   91  AuthorizedKeysFile .ssh/authorized_keys
+   92  sudo nano /etc/ssh/sshd_config
+   93  sudo systemctl restart ssh
+   94  ssh -i ~/.ssh/id_rsa user@3.112.16.157
+   95  chmod 700 ~/.ssh
+   96  chmod 600 ~/.ssh/authorized_keys
+   97  sudo systemctl restart ssh
+   98  cat ~/.ssh/id_rsa.pub | ssh user@3.112.16.157 'cat >> ~/.ssh/authorized_keys'
+   99  cat ~/.ssh/authorized_keys
+  100  ssh -v -i ~/.ssh/id_rsa user@3.112.16.157
+  101  chmod 700 ~/.ssh
+  102  chmod 600 ~/.ssh/authorized_keys
+  103  chown -R user:u
+
+
